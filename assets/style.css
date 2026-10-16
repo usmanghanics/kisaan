@@ -1,0 +1,91 @@
+:root {
+  --page: #F6F5F0; --raised: #FFFFFF; --sunken: #EEECE4; --line: #E3E0D6;
+  --text: #191A17; --muted: #5C5E57; --faint: #8A8C84;
+  --forest: #173F2C; --accent: #2F7A4B; --on-forest: #F2F5EF;
+  --radius: 22px;
+  --sans: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --urdu: "Noto Nastaliq Urdu", "Manrope", serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #101311; --raised: #181C19; --sunken: #1F2420; --line: #2A302B;
+    --text: #EEF1EC; --muted: #B4BAB2; --faint: #858C84;
+    --forest: #1E4A35; --accent: #7CC596; --on-forest: #F2F5EF;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--page); color: var(--text);
+  font: 16px/1.65 var(--sans); -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-underline-offset: 3px; }
+
+.bar {
+  position: sticky; top: 0; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px max(16px, calc((100vw - 760px) / 2));
+  background: color-mix(in srgb, var(--page) 86%, transparent);
+  backdrop-filter: saturate(1.4) blur(14px); -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-weight: 800; letter-spacing: -0.2px; }
+.brand img { border-radius: 10px; }
+.switch { display: inline-flex; padding: 3px; background: var(--sunken); border-radius: 999px; }
+.switch button {
+  border: 0; background: transparent; color: var(--muted); font: 600 13px/1 var(--sans);
+  padding: 8px 14px; border-radius: 999px; cursor: pointer;
+}
+.switch button[aria-pressed="true"] { background: var(--forest); color: var(--on-forest); box-shadow: 0 1px 3px rgb(0 0 0 / 0.12); }
+.switch .ur-font { font-family: var(--urdu); font-size: 13px; line-height: 1.2; }
+
+.tabs {
+  display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none;
+  padding: 14px max(16px, calc((100vw - 760px) / 2)) 0;
+}
+.tabs a {
+  flex: none; padding: 8px 14px; border-radius: 999px; text-decoration: none;
+  color: var(--muted); font-weight: 600; font-size: 14px; border: 1px solid var(--line); background: var(--raised);
+}
+.tabs a[aria-current="page"] { background: var(--forest); border-color: var(--forest); color: var(--on-forest); }
+
+main { max-width: 760px; margin: 0 auto; padding: 8px 16px 48px; }
+article { padding-top: 12px; }
+h1 { font-size: clamp(28px, 5vw, 38px); line-height: 1.15; letter-spacing: -0.8px; margin: 18px 0 8px; font-weight: 800; }
+h2 { font-size: 18px; letter-spacing: -0.2px; margin: 0 0 6px; font-weight: 700; }
+.lede { font-size: 17px; color: var(--muted); margin: 0 0 6px; }
+.meta { color: var(--faint); font-size: 13px; margin: 0 0 20px; }
+section { background: var(--raised); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; margin: 12px 0; }
+section p { margin: 0; color: var(--muted); }
+.note { color: var(--faint); font-size: 13px; margin-top: 18px; }
+.section-title { font-size: 22px; margin: 28px 0 4px; }
+
+.hero {
+  background: var(--forest); color: var(--on-forest); border: 0; text-align: center;
+  padding: 36px 20px 30px; margin-top: 16px; border-radius: 28px;
+}
+.hero h1 { margin: 14px 0 6px; }
+.hero .lede { color: color-mix(in srgb, var(--on-forest) 78%, transparent); max-width: 520px; margin: 0 auto; }
+.mark { border-radius: 24px; box-shadow: 0 10px 30px rgb(0 0 0 / 0.25); }
+.pill {
+  display: inline-block; margin: 18px 0 0; padding: 8px 14px; border-radius: 999px;
+  background: rgb(255 255 255 / 0.12); font-weight: 600; font-size: 14px;
+}
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin: 16px 0 0; }
+.card {
+  display: flex; flex-direction: column; gap: 2px; padding: 18px 20px; border-radius: var(--radius);
+  background: var(--raised); border: 1px solid var(--line); color: var(--text); text-decoration: none;
+  transition: transform .15s ease, border-color .15s ease;
+}
+.card:hover { transform: translateY(-2px); border-color: var(--accent); }
+.card span { color: var(--muted); font-size: 14px; }
+
+footer { max-width: 760px; margin: 0 auto; padding: 0 16px 40px; color: var(--faint); font-size: 13px; }
+
+/* One language at a time. Without script, both show. */
+html[data-lang="en"] .ur, html[data-lang="ur"] .en { display: none; }
+[lang="ur"], .ur { font-family: var(--urdu); }
+article.ur, footer .ur { line-height: 2.25; }
+article.ur h1 { line-height: 1.9; letter-spacing: 0; }
+article.ur h2 { line-height: 2; letter-spacing: 0; }
+.tabs.ur a { font-family: var(--urdu); line-height: 1.6; }
